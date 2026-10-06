@@ -16,7 +16,7 @@ class Komiic extends ComicSource {
     get headers() {
         let token = this.loadData('token')
         let headers = {
-            'Referer': 'https://komiic.com/',
+            'Referer': 'https://komiic.cc/',
             'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36',
             'Content-Type': 'application/json'
         }
@@ -28,7 +28,7 @@ class Komiic extends ComicSource {
 
     async queryJson(query) {
         let res = await Network.post(
-            'https://komiic.com/api/query',
+            'https://komiic.cc/api/query',
             this.headers,
             query
         )
@@ -87,12 +87,14 @@ class Komiic extends ComicSource {
             let updateTime = new Date(comic.dateUpdated)
             let description = getTimeDifference(updateTime)
             let formatedTime = `${updateTime.getFullYear()}-${updateTime.getMonth() + 1}-${updateTime.getDate()}`
+            let formatedTime = `${updateTime.getFullYear()}-${updateTime.getMonth() + 1}-${updateTime.getDate()}`
+            let imageUrl = comic.imageUrl.replace("komiic.com", "komiic.cc")
 
             return {
                 id: comic.id,
                 title: comic.title,
                 subTitle: author,
-                cover: comic.imageUrl,
+                cover: imageUrl,
                 tags: tags,
                 description: description,
                 updateTime: formatedTime
@@ -113,7 +115,7 @@ class Komiic extends ComicSource {
         /// 返回任意值表示登录成功
         login: async (account, pwd) => {
             let res = await Network.post(
-                'https://komiic.com/api/login',
+                'https://komiic.cc/api/login',
                 this.headers,
                 {
                     email: account,
@@ -134,7 +136,7 @@ class Komiic extends ComicSource {
             this.deleteData('token')
         },
 
-        registerWebsite: "https://komiic.com/register"
+        registerWebsite: "https://komiic.cc/register"
     }
 
     /// 探索页面
@@ -282,12 +284,13 @@ class Komiic extends ComicSource {
 
                 let updateTime = new Date(comic.dateUpdated)
                 let description = getTimeDifference(updateTime)
+                let imageUrl = comic.imageUrl.replace("komiic.com", "komiic.cc")
 
                 return {
                     id: comic.id,
                     title: comic.title,
                     subTitle: author,
-                    cover: comic.imageUrl,
+                    cover: imageUrl,
                     tags: tags,
                     description: description
                 }
@@ -406,12 +409,13 @@ class Komiic extends ComicSource {
             ])
 
             let info = results[0].comics.pop()
+            let imageUrl = info.cover.replace("komiic.com", "komiic.cc")
 
             return {
                 // string 标题
                 title: info.title,
                 // string 封面url
-                cover: info.cover,
+                cover: info.imageUrl,
                 // map<string, string[]> 标签
                 tags: {
                     "作者": [info.subTitle],
@@ -428,7 +432,7 @@ class Komiic extends ComicSource {
             let json = await this.queryJson({ "operationName": "imagesByChapterId", "variables": { "chapterId": epId }, "query": "query imagesByChapterId($chapterId: ID!) {\n  imagesByChapterId(chapterId: $chapterId) {\n    id\n    kid\n    height\n    width\n    __typename\n  }\n}" })
             return {
                 images: json.data.imagesByChapterId.map((i) => {
-                    return `https://komiic.com/api/image/${i.kid}`
+                    return `https://komiic.cc/api/image/${i.kid}`
                 })
             }
         },
@@ -437,7 +441,7 @@ class Komiic extends ComicSource {
             return {
                 headers: {
                     'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36',
-                    'referer': `https://komiic.com/comic/${comicId}/chapter/${epId}/images/all`
+                    'referer': `https://komiic.cc/comic/${comicId}/chapter/${epId}/images/all`
                 }
             }
         },
