@@ -273,7 +273,7 @@ class Wnacg extends ComicSource {
                 // number of comics to display at the same time
                 // randomNumber: 5,
 
-                categories: ["同人誌", "漢化", "日語", "English", "CG畫集", "3D漫畫", "寫真Cosplay"],
+                categories: ["同人誌", "漢化", "日語", "English", "CG畫集", "3D漫畫", "寫真Cosplay", "AI图集",],
 
                 // category or search
                 // if `category`, use categoryComics.load to load comics
@@ -289,6 +289,7 @@ class Wnacg extends ComicSource {
                     "/albums-index-cate-2.html",
                     "/albums-index-cate-22.html",
                     "/albums-index-cate-3.html",
+                    "/albums-index-cate-37.html",
                 ],
 
                 // [Optional] {string} cannot be used with `categoryParams`, set all category params to this value
@@ -363,7 +364,7 @@ class Wnacg extends ComicSource {
                 // number of comics to display at the same time
                 // randomNumber: 5,
 
-                categories: ["韓漫", "漢化", "生肉",],
+                categories: ["韓漫", "漢化", "生肉","合集",],
 
                 // category or search
                 // if `category`, use categoryComics.load to load comics
@@ -375,6 +376,7 @@ class Wnacg extends ComicSource {
                     "/albums-index-cate-19.html",
                     "/albums-index-cate-20.html",
                     "/albums-index-cate-21.html",
+                    "/albums-index-cate-38.html",
                 ],
 
                 // [Optional] {string} cannot be used with `categoryParams`, set all category params to this value
@@ -643,7 +645,7 @@ class Wnacg extends ComicSource {
             cover = cover.substring(0, 6) + cover.substring(8)
             let labels = document.querySelectorAll("div.asTBcell.uwconn > label")
             let category = labels[0].text.split("：")[1]
-            let isSeries = document.querySelector("#sr_pub") !== null
+            let isSeries = document.querySelector("sr_compact") !== null
             let tagsDom = document.querySelectorAll("div.asTBcell.uwconn a.tagshow");
             let tags = new Map()
             tags.set(isSeries ? "章節" : "頁數", [labels[1].text.split("：")[1]])
